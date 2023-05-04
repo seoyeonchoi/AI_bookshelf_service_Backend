@@ -3,8 +3,7 @@ require("dotenv").config(); //.env 호출
 const express = require("express");
 const app = express();
 
-const PORT = process.env.PORT || 5000;
-//4000이라는 포트번호를 서버에 할당
+const PORT = process.env.PORT || 5000; // 포트번호
 
 app.get("/", (req, res) => {
   res.send(`Okay let's go`);
