@@ -3,13 +3,14 @@
 ## 사용 스택
 
 1. Express
-2. Node.js
-3. mongoDB(예정)
+2. Node.js (v19.6.1)
+3. mongoDB (예정)
+4. nodemon
 
 ## 실행 방법
 
 1. `yarn run`: 로컬 서버 실행
-2. `yarn dev`: 로컬 테스트 서버 실행
+2. `yarn dev`: 로컬 테스트 서버 실행(예정)
 
 ## 주의 사항
 
@@ -26,4 +27,3 @@
 2. `cd ~/js_server`
 3. `git pull`
 4. `yarn` 실행하기
-5. `screen -x server` 실행하기
