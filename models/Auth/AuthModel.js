@@ -15,7 +15,7 @@ const AuthSchema = mongoose.Schema(
     user_id: {
       type: mongoose.SchemaTypes.ObjectId,
       trim: true,
-      unique: false,
+      unique: true,
     },
     access_token: { type: String, trim: true, unique: false, required: true },
     refresh_token: { type: String, trim: true, unique: false, required: true },

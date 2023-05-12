@@ -1,30 +1,87 @@
 import Profile from "../models/User/ProfileModel.js";
 import Authentication from "../models/User/AuthenticationModel.js";
 import Password from "../models/Auth/PasswordModel.js";
+import Auth from "../models/Auth/AuthModel.js";
 import User from "../models/User/UserModel.js";
+import { VerifyToken, AccessToken, RefreshToken } from "../modules/Token.js";
 
 export const SignIn = async (req, res) => {
   try {
     const {
+      user_id,
       email, // 이메일주소
       password,
-      salt,
+      salt, // 삭제 해야함 - 보안
+      access_token,
+      refresh_token,
     } = req.body;
+    console.log(req.body);
 
-    // const user = new User({
-    //   email,
-    // });
+    let access = "";
+    let refresh = "";
 
-    // const hashpassword = new Password({
-    //   password,
-    //   salt,
-    // });
-    console.log(password);
-    const user_id = await User.findOne({
-      email: email,
-      pwd: password,
-    }).then((data) => data._id);
-    console.log(111, data);
+    if (
+      VerifyToken(access_token) === null ||
+      VerifyToken(refresh_token) === null
+    ) {
+      // console.log(VerifyToken(access_token));
+      // console.log(VerifyToken(refresh_token));
+      console.log("---만료되었거나 토큰이 없습니다----");
+      access = AccessToken(email);
+      refresh = RefreshToken(email);
+      console.log("-------토큰이 발급되었습니다-------");
+    } else {
+      // console.log(VerifyToken(access_token));
+      // console.log(VerifyToken(refresh_token));
+      access = access_token;
+      refresh = refresh_token;
+    }
+
+    const auth = new Auth({
+      user_id,
+      access_token: access,
+      refresh_token: refresh,
+    });
+
+    auth.save().catch((err) => {
+      if (err.code == 11000) {
+        Auth.updateOne(
+          { user_id: user_id },
+          {
+            access_token: access,
+            refresh_token: refresh,
+          }
+        ).catch((err) => console.log(err));
+      } else {
+        console.log(err);
+      }
+    });
+
+    return res
+      .cookie("accessToken", access, {
+        httpOnly: true,
+        // secure: process.env?.NODE_ENV === "production",
+        // domain:
+        //   process.env?.NODE_ENV === "production" ? "pullim.shop" : "localhost",
+      })
+      .cookie("refreshToken", refresh, {
+        httpOnly: true,
+        // secure: process.env?.NODE_ENV === "production",
+        // domain:
+        //   process.env?.NODE_ENV === "production" ? "pullim.shop" : "localhost",
+      })
+      .status(200)
+      .json({
+        success: true,
+        info: {
+          user_id: user_id,
+          email: email,
+          password: password,
+          salt: salt, // 삭제 해야함 - 보안
+          access_token: access,
+          refresh_token: refresh,
+        },
+      });
   } catch (e) {
     console.log(e);
     return res.status(500).json({

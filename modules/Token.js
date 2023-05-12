@@ -1,9 +1,10 @@
-import db from "../models";
+// import db from "../models";
 import dotenv from "dotenv"; // .env file
 import jwt from "jsonwebtoken";
 dotenv.config();
 
 const JWT_SEC = process.env.JWT_SECRET;
+// console.log("JWT_SEC", JWT_SEC);
 
 // const createSecret = () =>
 //   //JWT_SECRET 값 생성
@@ -19,65 +20,42 @@ export const VerifyToken = (token) => {
     return jwt.verify(token, JWT_SEC);
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      console.log("토큰이 만료되었습니다.");
+      // console.log("토큰이 만료되었습니다.");
+      return null;
+    } else if (error.name === "JsonWebTokenError") {
+      // console.log("토큰이 없습니다.");
       return null;
     }
-    console.log(error);
+    // console.log("VerifyToken", error);
     return null;
   }
 };
 
-export const AccessToken = (email, name) => {
+export const AccessToken = (email) => {
   // const secretKey = String(createSecret());
   // console.log(JWT_SEC);
   return jwt.sign(
     {
       email: email,
-      name: name,
     },
     JWT_SEC,
     {
-      expiresIn: "20000ms", //20분
-      issuer: "pullim",
+      expiresIn: "2000ms", //20분
+      issuer: "server",
     }
   );
 };
 
-export const RefreshToken = (email, name) => {
+export const RefreshToken = (email) => {
   // const secretKey = String(createSecret());
   return jwt.sign(
     {
       email: email,
-      name: name,
     },
     JWT_SEC,
     {
       expiresIn: "24h", //24시간
-      issuer: "pullim",
+      issuer: "server",
     }
   );
-};
-
-export const FindUser = async (req, res, next) => {
-  try {
-    const refreshToken = req.cookies.refreshToken;
-    const user = await db.User_token.findOne({
-      include: [
-        {
-          model: db.User,
-          as: "UserToken",
-        },
-      ],
-      where: {
-        refresh_token: refreshToken,
-      },
-    });
-    console.log("============= findUser: start  =============");
-    req.body.userData = user.dataValues.UserToken.dataValues;
-    req.body.userToken = user.dataValues;
-    console.log("============= findUser: end  =============");
-    next();
-  } catch (error) {
-    next(error);
-  }
 };

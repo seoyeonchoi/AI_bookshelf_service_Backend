@@ -19,16 +19,19 @@ const createSalt = () =>
 router.use("/", async (req, res, next) => {
   const salt =
     req.body.name === undefined
-      ? await Password.findOne({
-          user_id: await User.findOne({ email: req.body.email }).then(
-            (data) => data._id
-          ),
-        }).then((data) => data.salt)
-      : // data ? data.dataValues.salt : ""
+      ? await User.findOne({
+          email: req.body.email,
+        })
+          .then(async (data) => {
+            req.body.user_id = data?._id;
+            return await Password.findOne({ user_id: data?._id });
+          })
+          .then((data) => data?.salt)
+      : await createSalt(); //회원가입
 
-        await createSalt(); //회원가입
-  // console.log(111, salt);
-  try {
+  // console.log(salt);
+
+  if (salt) {
     crypto.pbkdf2(req.body.password, salt, 9999, 64, "sha512", (e, key) => {
       if (e)
         return res.status(500).json({
@@ -41,12 +44,12 @@ router.use("/", async (req, res, next) => {
       req.body.salt = salt;
       next();
     });
-  } catch (e) {
-    console.log(e);
+  } else {
+    // console.log(e);
     return res.status(500).json({
       success: false,
       info: {
-        message: e.code,
+        message: "not found account",
       },
     });
   }
