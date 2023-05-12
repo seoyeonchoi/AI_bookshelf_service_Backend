@@ -3,6 +3,7 @@ dotenv.config();
 
 export default {
   default: "member",
-  auth: process.env.CONNECTION_URL_AUTH,
-  member: process.env.CONNECTION_URL_MEMBER,
+  auth: "mongodb://localhost:27017/auth",
+  member: "mongodb://localhost:27017/member",
+  user: "mongodb://localhost:27017/user",
 };

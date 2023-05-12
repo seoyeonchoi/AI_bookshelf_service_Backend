@@ -1,5 +1,6 @@
 import dotenv from "dotenv"; // .env file
-import ProfileRouter from "./routes/ProfileRouter.js";
+// import UserRouter from "./routes/UserRouter.js";
+import AuthRouter from "./routes/AuthRouter.js";
 import Express from "express";
 // import bodyParser from "body-parser";
 
@@ -19,6 +20,7 @@ app.listen(PORT, () => {
   console.log(`Server on : http://localhost:${PORT}/`);
 });
 
-app.use("/profile", ProfileRouter);
+// app.use("/user", UserRouter);
+app.use("/auth", AuthRouter);
 
 export default app;
