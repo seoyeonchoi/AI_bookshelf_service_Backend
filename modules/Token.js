@@ -40,7 +40,7 @@ export const AccessToken = (email) => {
     },
     JWT_SEC,
     {
-      expiresIn: "2000ms", //20분
+      expiresIn: "200000ms", //20분
       issuer: "server",
     }
   );

@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema(
   {
     // _id: { type: mongoose.SchemaTypes.ObjectId, trim: true, unique: false },
     name: { type: String, trim: true, required: true },
-    email: { type: String, trim: true, unique: false },
+    email: { type: String, trim: true, unique: true },
     usertype: { type: Number, trim: true, default: 0 },
     signuptype: { type: String, lowercase: true, trim: true, default: "local" },
   },

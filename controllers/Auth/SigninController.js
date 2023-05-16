@@ -1,9 +1,9 @@
-import Profile from "../models/User/ProfileModel.js";
-import Authentication from "../models/User/AuthenticationModel.js";
-import Password from "../models/Auth/PasswordModel.js";
-import Auth from "../models/Auth/AuthModel.js";
-import User from "../models/User/UserModel.js";
-import { VerifyToken, AccessToken, RefreshToken } from "../modules/Token.js";
+import Profile from "../../models/User/ProfileModel.js";
+import Authentication from "../../models/User/AuthenticationModel.js";
+import Password from "../../models/Auth/PasswordModel.js";
+import Auth from "../../models/Auth/AuthModel.js";
+import User from "../../models/User/UserModel.js";
+import { VerifyToken, AccessToken, RefreshToken } from "../../modules/Token.js";
 
 export const SignIn = async (req, res) => {
   try {
@@ -76,10 +76,10 @@ export const SignIn = async (req, res) => {
         info: {
           user_id: user_id,
           email: email,
-          password: password,
+          password: password, // 삭제 해야함 - 보안
           salt: salt, // 삭제 해야함 - 보안
-          access_token: access,
-          refresh_token: refresh,
+          access_token: access, // 삭제 해야함 - 보안
+          refresh_token: refresh, // 삭제 해야함 - 보안
         },
       });
   } catch (e) {
