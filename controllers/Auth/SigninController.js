@@ -26,7 +26,7 @@ export const SignIn = async (req, res) => {
     ) {
       // console.log(VerifyToken(access_token));
       // console.log(VerifyToken(refresh_token));
-      console.log("---만료되었거나 토큰이 없습니다----");
+      console.log("---토큰이 만료되었거나 없습니다----");
       access = AccessToken(email);
       refresh = RefreshToken(email);
       console.log("-------토큰이 발급되었습니다-------");

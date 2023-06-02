@@ -1,6 +1,7 @@
 import dotenv from "dotenv"; // .env file
 // import UserRouter from "./routes/UserRouter.js";
 import AuthRouter from "./routes/AuthRouter.js";
+import mongoose from "mongoose";
 import Express from "express";
 // import bodyParser from "body-parser";
 
@@ -16,11 +17,15 @@ app.get("/", (req, res) => {
   res.send(`Okay let's go`);
 });
 
+//route
+app.use("/auth", AuthRouter);
+// app.use("/user", UserRouter);
+
 app.listen(PORT, () => {
   console.log(`Server on : http://localhost:${PORT}/`);
 });
 
-// app.use("/user", UserRouter);
-app.use("/auth", AuthRouter);
+//mongodb
+mongoose.connect(process.env.CONNECTION_URL);
 
 export default app;

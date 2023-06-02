@@ -6,15 +6,6 @@ dotenv.config();
 const JWT_SEC = process.env.JWT_SECRET;
 // console.log("JWT_SEC", JWT_SEC);
 
-// const createSecret = () =>
-//   //JWT_SECRET 값 생성
-//   new Promise((resolve, reject) => {
-//     crypto_.randomBytes(64, (err: any, buf: any) => {
-//       if (err) reject(err);
-//       resolve(buf.toString("base64"));
-//     });
-//   });
-
 export const VerifyToken = (token) => {
   try {
     return jwt.verify(token, JWT_SEC);
@@ -32,7 +23,6 @@ export const VerifyToken = (token) => {
 };
 
 export const AccessToken = (email) => {
-  // const secretKey = String(createSecret());
   // console.log(JWT_SEC);
   return jwt.sign(
     {
