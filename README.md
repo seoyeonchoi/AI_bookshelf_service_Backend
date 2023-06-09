@@ -27,3 +27,4 @@
 2. `cd ~/js_server`
 3. `git pull`
 4. `yarn` 실행하기
+# aivle0317_BE
