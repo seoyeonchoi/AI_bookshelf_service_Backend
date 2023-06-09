@@ -10,7 +10,7 @@
     "nodemon": "^2.0.22"
   },
   "scripts": {
-    "start": "nodemon --watch ../js_server app.js",
+    "start": "nodemon --watch ../aivle_BE app.js",
     "dev": "nodemon --watch ../js_server app.js"
   },
   "name": "my-package",
