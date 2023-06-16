@@ -10,7 +10,7 @@ import { SignUp } from "../controllers/Auth/SignupController.js";
 AuthRouter.post("/signup", PasswordHash, SignUp);
 
 import { SignIn } from "../controllers/Auth/SigninController.js";
-AuthRouter.get("/signin", PasswordHash, Token, SignIn);
+AuthRouter.post("/signin", PasswordHash, Token, SignIn);
 
 import { SignOut } from "../controllers/Auth/SignoutController.js";
 AuthRouter.get("/signout", SignOut);
