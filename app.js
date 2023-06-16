@@ -4,8 +4,6 @@ import AuthRouter from "./routes/AuthRouter.js";
 import mongoose from "mongoose";
 import Express from "express";
 import cors from 'cors';
-// import bodyParser from "body-parser";
-import cors from "cors";
 
 dotenv.config();
 const app = Express();
