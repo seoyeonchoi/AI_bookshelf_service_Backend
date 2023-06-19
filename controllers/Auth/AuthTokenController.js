@@ -1,6 +1,6 @@
 import { VerifyToken, AccessToken } from "../../modules/Token.js";
-import Auth from "../../models/Auth/AuthModel.js";
-import User from "../../models/User/UserModel.js";
+import Authentication from "../../models/auth.js";
+import User from "../../models/user.js";
 import Express from "express";
 import cookieParser from "cookie-parser";
 // const router = Express.Router();
@@ -33,7 +33,7 @@ export const AuthToken = async (req, res) => {
   // console.log("accessToken", decodedAccessToken);
   // console.log("refreshToken", decodedRefreshToken);
 
-  const user_id = await Auth.findOne({
+  const user_id = await Authentication.findOne({
     refresh_token: currentRefreshToken,
   });
 
@@ -47,7 +47,7 @@ export const AuthToken = async (req, res) => {
     });
   }
 
-  const { email, name, usertype } = await User.findById(user_id.user_id);
+  const { email, name, usertype } = await Authentication.findById(user_id.user_id);
 
   const userData = {
     user_id: user_id,

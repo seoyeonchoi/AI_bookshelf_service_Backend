@@ -1,6 +1,6 @@
 import express from "express";
 import crypto from "crypto";
-import User from "../models/User/UserModel.js";
+import User from "../models/user.js";
 import Password from "../models/Auth/PasswordModel.js";
 
 const router = express.Router();

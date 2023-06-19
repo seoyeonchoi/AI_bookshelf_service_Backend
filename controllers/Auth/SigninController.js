@@ -1,8 +1,8 @@
-import Profile from "../../models/User/ProfileModel.js";
-import Authentication from "../../models/User/AuthenticationModel.js";
-import Password from "../../models/Auth/PasswordModel.js";
-import Auth from "../../models/Auth/AuthModel.js";
-import User from "../../models/User/UserModel.js";
+// import Profile from "../../models/User/ProfileModel.js";
+import Authentication from "../../models/auth.js";
+// import Password from "../../models/Auth/PasswordModel.js";
+// import Auth from "../../models/Auth/AuthModel.js";
+import User from "../../models/user.js";
 import { VerifyToken, AccessToken, RefreshToken } from "../../modules/Token.js";
 
 export const SignIn = async (req, res) => {
@@ -37,15 +37,15 @@ export const SignIn = async (req, res) => {
       refresh = refresh_token;
     }
 
-    const auth = new Auth({
+    const authentication = new Authentication({
       user_id,
       access_token: access,
       refresh_token: refresh,
     });
 
-    auth.save().catch((err) => {
+    authentication.save().catch((err) => {
       if (err.code == 11000) {
-        Auth.updateOne(
+        Authentication.updateOne(
           { user_id: user_id },
           {
             access_token: access,

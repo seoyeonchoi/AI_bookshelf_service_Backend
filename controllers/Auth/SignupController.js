@@ -1,7 +1,11 @@
-import Profile from "../../models/User/ProfileModel.js";
-import Authentication from "../../models/User/AuthenticationModel.js";
+// import Profile from "../../models/User/ProfileModel.js";
+// import Authentication from "../../models/User/AuthenticationModel.js";
 import Password from "../../models/Auth/PasswordModel.js";
-import User from "../../models/User/UserModel.js";
+// import User from "../../models/User/UserModel.js";
+
+import Authentication from "../../models/auth.js";
+
+import User from "../../models/user.js";
 
 export const SignUp = async (req, res) => {
   try {

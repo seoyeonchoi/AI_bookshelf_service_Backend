@@ -1,5 +1,5 @@
 import express from "express";
-import Auth from "../models/Auth/AuthModel.js";
+import Authentication from "../models/auth.js";
 import Password from "../models/Auth/PasswordModel.js";
 
 const router = express.Router();
@@ -20,7 +20,7 @@ export default router.use("/", async (req, res, next) => {
           },
         });
       } else {
-        await Auth.findOne({ user_id: user_id }).then((data) => {
+        await Authentication.findOne({ user_id: user_id }).then((data) => {
           req.body.access_token = data?.access_token;
           req.body.refresh_token = data?.refresh_token;
         });
