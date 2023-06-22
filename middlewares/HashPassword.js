@@ -1,7 +1,7 @@
 import express from "express";
 import crypto from "crypto";
-import User from "../models/User/UserModel.js";
-import Password from "../models/Auth/PasswordModel.js";
+import User from "../models/UserModel.js";
+import Auth from "../models/AuthModel.js";
 
 const router = express.Router();
 
@@ -17,14 +17,16 @@ const createSalt = () =>
   });
 
 router.use("/", async (req, res, next) => {
+  console.log(req.body?.email);
   const salt =
     req.body.name === undefined
       ? await User.findOne({
-          email: req.body.email,
+          user_email: req.body.email,
         })
           .then(async (data) => {
+            // console.log(data);
             req.body.user_id = data?._id;
-            return await Password.findOne({ user_id: data?._id });
+            return await Auth.findOne({ user_id: data?._id });
           })
           .then((data) => data?.salt)
       : await createSalt(); //회원가입

@@ -7,12 +7,13 @@ const AuthSchema = mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       trim: true,
       unique: true,
+      required: true,
     },
-    access_token: { type: String, trim: true, unique: false, required: true },
-    refresh_token: { type: String, trim: true, unique: false, required: true },
+    salt: { type: String, trim: true, required: true },
+    password: { type: String, trim: true, required: true },
   },
   { timestamps: true }
 );
 
-// export default createConnection("auth").model("auth", AuthSchema);
+// export default createConnection("auth").model("password", PasswordSchema);
 export default mongoose.model("auth", AuthSchema);

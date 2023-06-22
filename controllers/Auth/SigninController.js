@@ -1,8 +1,4 @@
-import Profile from "../../models/User/ProfileModel.js";
-import Authentication from "../../models/User/AuthenticationModel.js";
-import Password from "../../models/Auth/PasswordModel.js";
-import Auth from "../../models/Auth/AuthModel.js";
-import User from "../../models/User/UserModel.js";
+import User from "../../models/UserModel.js";
 import { VerifyToken, AccessToken, RefreshToken } from "../../modules/Token.js";
 
 export const SignIn = async (req, res) => {
@@ -15,7 +11,7 @@ export const SignIn = async (req, res) => {
       access_token,
       refresh_token,
     } = req.body;
-    console.log(req.body);
+    // console.log(111, req.body);
 
     let access = "";
     let refresh = "";
@@ -37,38 +33,25 @@ export const SignIn = async (req, res) => {
       refresh = refresh_token;
     }
 
-    const auth = new Auth({
+    const user = new User({
       user_id,
       access_token: access,
       refresh_token: refresh,
     });
 
-    auth.save().catch((err) => {
-      if (err.code == 11000) {
-        Auth.updateOne(
-          { user_id: user_id },
-          {
-            access_token: access,
-            refresh_token: refresh,
-          }
-        ).catch((err) => console.log(err));
-      } else {
-        console.log(err);
-      }
+    await User.updateOne(
+      { _id: user_id },
+      { access_token: access, refresh_token: refresh }
+    ).catch((e) => {
+      console.log(e);
     });
 
     return res
       .cookie("accessToken", access, {
         httpOnly: true,
-        // secure: process.env?.NODE_ENV === "production",
-        // domain:
-        //   process.env?.NODE_ENV === "production" ? "pullim.shop" : "localhost",
       })
       .cookie("refreshToken", refresh, {
         httpOnly: true,
-        // secure: process.env?.NODE_ENV === "production",
-        // domain:
-        //   process.env?.NODE_ENV === "production" ? "pullim.shop" : "localhost",
       })
       .status(200)
       .json({

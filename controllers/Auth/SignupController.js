@@ -1,7 +1,5 @@
-import Profile from "../../models/User/ProfileModel.js";
-import Authentication from "../../models/User/AuthenticationModel.js";
-import Password from "../../models/Auth/PasswordModel.js";
-import User from "../../models/User/UserModel.js";
+import Auth from "../../models/AuthModel.js";
+import User from "../../models/UserModel.js";
 
 export const SignUp = async (req, res) => {
   try {
@@ -10,58 +8,64 @@ export const SignUp = async (req, res) => {
       birth, // 생년월일
       sex, // 성별
       email, // 이메일주소
+      nickname, // 닉네임(별명)
+      phone, // 전화번호
+      work, // 직업
+      signuppath, // 가입경로
+      useCheck, // 이용약관 동의
+      infoCheck, // 사용자 정보 동의
+      marketingCheck, // 마케팅 동의
       password,
       salt,
     } = req.body;
+    // console.log(req.body);
 
     const user = new User({
-      name,
-      email,
+      user_email: email,
+      user_name: name,
+      user_birth: birth,
+      user_sex: sex,
+      profile: {
+        user_nickname: nickname, // 닉네임(별명)
+      },
+      user_phone: phone, // 전화번호
+      user_work: work, // 직업
+      signuppath, // 가입경로
+      useCheck, // 이용약관 동의
+      infoCheck, // 사용자 정보 동의
+      marketingCheck, // 마케팅 동의
     });
 
-    const authentication = new Authentication({
-      birth,
-      sex,
-    });
-
-    const hashpassword = new Password({
-      password,
+    const auth = new Auth({
       salt,
+      password,
     });
-
-    const profile = new Profile({});
 
     user // 사용자 정보 저장
       .save()
       .then((user) => {
         // console.log(user._id);
         if (user) {
-          authentication.user_id = user._id;
-          profile.user_id = user._id;
-          hashpassword.user_id = user._id;
-          profile.save(); // 프로필 정보 저장
-          hashpassword.save(); // 계정 로그인 정보 저장
-          authentication // 사용자 인증 정보 저장
-            .save()
+          auth.user_id = user._id;
+          auth
+            .save() // 계정 로그인 정보 저장
             .then(() => {
-              if (authentication) {
+              if (auth) {
                 return res.status(200).json({
                   success: true,
                   info: {
                     user: {
                       user_id: user._id,
                       name: user.name,
-                      birth: authentication.birth,
-                      sex: authentication.sex,
+                      birth: user.birth,
+                      sex: user.sex,
                       email: user.email,
                       auth: {
-                        password: hashpassword.password,
-                        salt: hashpassword.salt,
+                        password: auth.password,
+                        salt: auth.salt,
                       },
-                      profile: {
-                        nickname: profile.nickname,
-                        img_url: profile.img_url,
-                      },
+                      nickname: user.nickname,
+                      img_url: user.img_url,
                       type: {
                         usertype: user.usertype,
                         signuptype: user.signuptype,

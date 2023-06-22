@@ -1,6 +1,6 @@
 import { VerifyToken, AccessToken } from "../../modules/Token.js";
-import Auth from "../../models/Auth/AuthModel.js";
-import User from "../../models/User/UserModel.js";
+import Auth from "../../models/AuthModel.js";
+import User from "../../models/UserModel.js";
 import Express from "express";
 import cookieParser from "cookie-parser";
 // const router = Express.Router();
@@ -33,13 +33,13 @@ export const AuthToken = async (req, res) => {
   // console.log("accessToken", decodedAccessToken);
   // console.log("refreshToken", decodedRefreshToken);
 
-  const user_id = await Auth.findOne({
+  const { _id, user_email, user_name, usertype } = await User.findOne({
     refresh_token: currentRefreshToken,
   });
 
-  // console.log("111", user_id.user_id);
+  // console.log("111", _id._id);
 
-  if (!user_id) {
+  if (!_id) {
     // 리소스(해당 토큰을 가지고 있는 유저)를 찾을 수 없음
     return res.status(404).json({
       success: true,
@@ -47,12 +47,10 @@ export const AuthToken = async (req, res) => {
     });
   }
 
-  const { email, name, usertype } = await User.findById(user_id.user_id);
-
   const userData = {
-    user_id: user_id,
-    email,
-    name,
+    _id,
+    email: user_email,
+    name: user_name,
     usertype: String(usertype),
   };
 
@@ -73,7 +71,7 @@ export const AuthToken = async (req, res) => {
       /**
        *  DB를 조회해서 payload에 담을 값들을 가져오는 로직
        */
-      const newAccessToken = AccessToken(email);
+      const newAccessToken = AccessToken(user_email);
       return res
         .cookie("accessToken", newAccessToken, {
           httpOnly: true,
