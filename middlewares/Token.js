@@ -23,6 +23,14 @@ export default router.use("/", async (req, res, next) => {
         await User.findOne({ _id: user_id }).then((data) => {
           // console.log(333, data);
           // req.body = data;
+          req.body.user_email = data?.user_email;
+          req.body.user_name = data?.user_name;
+          req.body.usertype = data?.usertype;
+          req.body.profile = data?.profile;
+          req.body.user_bookshelf = data?.user_bookshelf;
+          req.body.user_like_book = data?.user_like_book;
+          req.body.user_cart = data?.user_cart;
+          req.body.user_interest = data?.user_interest;
           req.body.access_token = data?.access_token;
           req.body.refresh_token = data?.refresh_token;
         });

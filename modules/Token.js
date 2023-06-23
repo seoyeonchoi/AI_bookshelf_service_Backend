@@ -22,11 +22,11 @@ export const VerifyToken = (token) => {
   }
 };
 
-export const AccessToken = (email) => {
+export const AccessToken = (data) => {
   // console.log(JWT_SEC);
   return jwt.sign(
     {
-      email: email,
+      data: data,
     },
     JWT_SEC,
     {
@@ -36,11 +36,11 @@ export const AccessToken = (email) => {
   );
 };
 
-export const RefreshToken = (email) => {
+export const RefreshToken = (data) => {
   // const secretKey = String(createSecret());
   return jwt.sign(
     {
-      email: email,
+      data: data,
     },
     JWT_SEC,
     {

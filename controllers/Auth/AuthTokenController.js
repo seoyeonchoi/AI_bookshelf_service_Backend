@@ -33,7 +33,17 @@ export const AuthToken = async (req, res) => {
   // console.log("accessToken", decodedAccessToken);
   // console.log("refreshToken", decodedRefreshToken);
 
-  const { _id, user_email, user_name, usertype } = await User.findOne({
+  const {
+    _id,
+    user_email,
+    user_name,
+    user_type,
+    profile,
+    user_bookshelf,
+    user_like_book,
+    user_cart,
+    user_interest,
+  } = await User.findOne({
     refresh_token: currentRefreshToken,
   });
 
@@ -48,10 +58,15 @@ export const AuthToken = async (req, res) => {
   }
 
   const userData = {
-    _id,
+    // _id,
     email: user_email,
     name: user_name,
-    usertype: String(usertype),
+    nickname: profile.user_nickname,
+    user_bookshelf,
+    user_like_book,
+    user_cart,
+    user_interest,
+    user_type: String(user_type),
   };
 
   if (decodedAccessToken === null) {
@@ -71,7 +86,7 @@ export const AuthToken = async (req, res) => {
       /**
        *  DB를 조회해서 payload에 담을 값들을 가져오는 로직
        */
-      const newAccessToken = AccessToken(user_email);
+      const newAccessToken = AccessToken(userData);
       return res
         .cookie("accessToken", newAccessToken, {
           httpOnly: true,

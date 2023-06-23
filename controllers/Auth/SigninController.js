@@ -10,11 +10,30 @@ export const SignIn = async (req, res) => {
       salt, // 삭제 해야함 - 보안
       access_token,
       refresh_token,
+      user_name,
+      user_type,
+      profile,
+      user_bookshelf,
+      user_like_book,
+      user_cart,
+      user_interest,
     } = req.body;
-    // console.log(111, req.body);
+    console.log(111, req.body);
 
     let access = "";
     let refresh = "";
+
+    const userData = {
+      // _id,
+      email,
+      name: user_name,
+      nickname: profile.user_nickname,
+      user_bookshelf,
+      user_like_book,
+      user_cart,
+      user_interest,
+      user_type: String(user_type),
+    };
 
     if (
       VerifyToken(access_token) === null ||
@@ -23,8 +42,8 @@ export const SignIn = async (req, res) => {
       // console.log(VerifyToken(access_token));
       // console.log(VerifyToken(refresh_token));
       console.log("---토큰이 만료되었거나 없습니다----");
-      access = AccessToken(email);
-      refresh = RefreshToken(email);
+      access = AccessToken(userData);
+      refresh = RefreshToken(userData);
       console.log("-------토큰이 발급되었습니다-------");
     } else {
       // console.log(VerifyToken(access_token));
@@ -33,11 +52,11 @@ export const SignIn = async (req, res) => {
       refresh = refresh_token;
     }
 
-    const user = new User({
-      user_id,
-      access_token: access,
-      refresh_token: refresh,
-    });
+    // const user = new User({
+    //   user_id,
+    //   access_token: access,
+    //   refresh_token: refresh,
+    // });
 
     await User.updateOne(
       { _id: user_id },
