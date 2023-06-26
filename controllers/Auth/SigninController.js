@@ -13,12 +13,12 @@ export const SignIn = async (req, res) => {
       user_name,
       user_type,
       profile,
-      user_bookshelf,
-      user_like_book,
-      user_cart,
-      user_interest,
+      // user_bookshelf,
+      // user_like_book,
+      // user_cart,
+      // user_interest,
     } = req.body;
-    console.log(111, req.body);
+    // console.log(111, req.body);
 
     let access = "";
     let refresh = "";
@@ -28,10 +28,10 @@ export const SignIn = async (req, res) => {
       email,
       name: user_name,
       nickname: profile.user_nickname,
-      user_bookshelf,
-      user_like_book,
-      user_cart,
-      user_interest,
+      // user_bookshelf,
+      // user_like_book,
+      // user_cart,
+      // user_interest,
       user_type: String(user_type),
     };
 

@@ -14,8 +14,6 @@ export const AuthToken = async (req, res) => {
   const currentAccessToken = req.cookies?.accessToken;
   const currentRefreshToken = req.cookies?.refreshToken;
 
-  // console.log(req.cookies);
-
   try {
     if (currentAccessToken === undefined || currentRefreshToken === undefined) {
       throw Error("API 사용 권한이 없습니다.");
@@ -62,10 +60,10 @@ export const AuthToken = async (req, res) => {
     email: user_email,
     name: user_name,
     nickname: profile.user_nickname,
-    user_bookshelf,
-    user_like_book,
-    user_cart,
-    user_interest,
+    // user_bookshelf,
+    // user_like_book,
+    // user_cart,
+    // user_interest,
     user_type: String(user_type),
   };
 
@@ -87,12 +85,17 @@ export const AuthToken = async (req, res) => {
        *  DB를 조회해서 payload에 담을 값들을 가져오는 로직
        */
       const newAccessToken = AccessToken(userData);
+      // console.log(222, newAccessToken);
+      await User.updateOne(
+        { _id: _id },
+        { access_token: newAccessToken }
+      ).catch((e) => {
+        console.log(e);
+      });
+
       return res
         .cookie("accessToken", newAccessToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          domain:
-            process.env.NODE_ENV === "production" ? "pullim.shop" : "localhost",
         })
         .status(201)
         .json({
