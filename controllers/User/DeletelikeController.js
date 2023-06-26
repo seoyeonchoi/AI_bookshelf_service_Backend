@@ -1,6 +1,6 @@
 import User from "../../models/UserModel.js";
 
-// 좋아요 추가기능
+// 좋아요 삭제기능
 export const Deletelike = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   await User.findOne(
