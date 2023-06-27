@@ -1,4 +1,4 @@
-import User from "../../models/UserModel.js";
+import User from "../../../models/UserModel.js";
 
 // 좋아요 추가기능
 export const Addlike = async (req, res) => {
