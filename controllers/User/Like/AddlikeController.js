@@ -1,7 +1,7 @@
 import User from "../../../models/UserModel.js";
 
 // 좋아요 추가기능
-export const Addlike = async (req, res) => {
+export const AddLike = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   await User.findOne(
     {
@@ -11,7 +11,7 @@ export const Addlike = async (req, res) => {
       _id: 1,
     }
   ).then(async (data) => {
-    console.log(data);
+    // console.log(666, data);
     await User.updateOne(
       { _id: data._id },
       { $addToSet: { user_like_book: req?.body } }

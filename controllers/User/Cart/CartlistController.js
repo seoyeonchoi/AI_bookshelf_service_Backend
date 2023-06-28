@@ -1,7 +1,7 @@
 import User from "../../../models/UserModel.js";
 
 // 좋아요 목록 전달기능
-export const Cartlist = async (req, res) => {
+export const CartList = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   try {
     await User.findOne(
@@ -9,23 +9,16 @@ export const Cartlist = async (req, res) => {
         access_token: req?.cookies?.accessToken,
       },
       {
-        _id: 0,
-        user_cart_book: { isbn: 1 },
+        // id: _id,
+        user_cart: 1,
       }
     ).then((data) => {
-      // console.log(333, data.user_cart_book);
-      const list = [];
-      for (let i = 0; i < data.user_cart_book.length; i++) {
-        // console.log(data.user_cart_book[i].isbn);
-        // console.log(i);
-        const isbn = data.user_cart_book[i].isbn;
-        list.push(isbn);
-      }
+      console.log(333, data?.user_cart);
       // console.log(list);
       return res.status(200).json({
         success: true,
         info: {
-          list: list,
+          list: data?.user_cart,
         },
       });
     });

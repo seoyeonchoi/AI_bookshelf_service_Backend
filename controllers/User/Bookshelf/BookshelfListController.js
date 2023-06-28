@@ -1,7 +1,7 @@
 import User from "../../../models/UserModel.js";
 
 // 좋아요 목록 전달기능
-export const LikeList = async (req, res) => {
+export const BookshelfList = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   try {
     await User.findOne(
@@ -10,15 +10,15 @@ export const LikeList = async (req, res) => {
       },
       {
         // id: _id,
-        user_like_book: 1,
+        user_bookshelf: 1,
       }
     ).then((data) => {
-      console.log(333, data?.user_like_book);
+      console.log(333, data?.user_bookshelf);
       // console.log(list);
       return res.status(200).json({
         success: true,
         info: {
-          list: data?.user_like_book,
+          list: data?.user_bookshelf,
         },
       });
     });

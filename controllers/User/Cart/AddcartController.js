@@ -1,7 +1,7 @@
 import User from "../../../models/UserModel.js";
 
 // 좋아요 추가기능
-export const Addcart = async (req, res) => {
+export const AddCart = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   await User.findOne(
     {
@@ -14,7 +14,7 @@ export const Addcart = async (req, res) => {
     console.log(data);
     await User.updateOne(
       { _id: data._id },
-      { $addToSet: { user_cart_book: req?.body } }
+      { $addToSet: { user_cart: req?.body } }
     );
   });
   try {

@@ -1,7 +1,7 @@
 import User from "../../../models/UserModel.js";
 
 // 좋아요 삭제기능
-export const DeleteLike = async (req, res) => {
+export const DeleteBookshelf = async (req, res) => {
   // console.log(req?.cookies?.accessToken);
   await User.findOne(
     {
@@ -14,7 +14,7 @@ export const DeleteLike = async (req, res) => {
     console.log(req?.body.isbn);
     await User.updateOne(
       { _id: data._id },
-      { $pull: { user_like_book: req?.body } }
+      { $pull: { user_bookshelf: req?.body } }
     ).then((data) => console.log(data));
   });
   try {
