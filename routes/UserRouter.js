@@ -29,6 +29,9 @@ UserRouter.post("/cartcheck", route.use(cookieParser()), CartCheck);
 import { CartList } from "../controllers/User/Cart/CartListController.js";
 UserRouter.post("/cartlist", route.use(cookieParser()), CartList);
 
+import { AllAddBookshelf } from "../controllers/User/Bookshelf/AllAddBookshelfController.js";
+UserRouter.post("/alladdbookshelf", route.use(cookieParser()), AllAddBookshelf);
+
 import { AddBookshelf } from "../controllers/User/Bookshelf/AddBookshelfController.js";
 UserRouter.post("/addbookshelf", route.use(cookieParser()), AddBookshelf);
 
