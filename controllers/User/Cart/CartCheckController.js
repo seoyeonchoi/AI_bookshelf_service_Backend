@@ -13,7 +13,7 @@ export const CartCheck = async (req, res) => {
         user_cart: { isbn: 1 },
       }
     ).then((data) => {
-      console.log(333, data);
+      // console.log(333, data);
       const list = [];
       for (let i = 0; i < data?.user_cart.length; i++) {
         // console.log(data.user_cart[i].isbn);

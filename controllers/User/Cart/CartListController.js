@@ -13,7 +13,7 @@ export const CartList = async (req, res) => {
         user_cart: 1,
       }
     ).then((data) => {
-      console.log(333, data?.user_cart);
+      // console.log(333, data?.user_cart);
       // console.log(list);
       return res.status(200).json({
         success: true,

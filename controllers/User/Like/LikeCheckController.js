@@ -13,7 +13,7 @@ export const LikeCheck = async (req, res) => {
         user_like_book: { isbn: 1 },
       }
     ).then((data) => {
-      console.log(333, data.user_like_book);
+      // console.log(333, data.user_like_book);
       const list = [];
       for (let i = 0; i < data.user_like_book.length; i++) {
         // console.log(data.user_like_book[i].isbn);

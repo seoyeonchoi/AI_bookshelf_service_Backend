@@ -1,8 +1,8 @@
 import User from "../../../models/UserModel.js";
 
 export const ProfileChange = async (req, res) => {
-  console.log(req?.cookies?.accessToken);
-  console.log(req?.body);
+  // console.log(req?.cookies?.accessToken);
+  // console.log(req?.body);
   const { user_nickname, image } = req?.body;
   try {
     await User.updateOne(
@@ -16,7 +16,7 @@ export const ProfileChange = async (req, res) => {
         },
       }
     ).then((data) => {
-      console.log(333, data);
+      // console.log(333, data);
       // console.log(list);
       return res.status(200).json({
         success: true,
