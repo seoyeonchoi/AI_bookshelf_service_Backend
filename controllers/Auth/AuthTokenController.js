@@ -1,6 +1,11 @@
 import { VerifyToken, AccessToken } from "../../modules/Token.js";
+<<<<<<< HEAD
 import Auth from "../../models/AuthModel.js";
 import User from "../../models/UserModel.js";
+=======
+import Authentication from "../../models/auth.js";
+import User from "../../models/user.js";
+>>>>>>> 5fbb845dcd4ee040f11dd90a2bec083bdb5b86ac
 import Express from "express";
 import cookieParser from "cookie-parser";
 // const router = Express.Router();
@@ -55,6 +60,11 @@ export const AuthToken = async (req, res) => {
       });
   }
 
+<<<<<<< HEAD
+=======
+  const { email, name, usertype } = await Authentication.findById(user_id.user_id);
+
+>>>>>>> 5fbb845dcd4ee040f11dd90a2bec083bdb5b86ac
   const userData = {
     email: res_data?.user_email,
     name: res_data?.user_name,

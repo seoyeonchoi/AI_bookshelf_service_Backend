@@ -52,6 +52,7 @@ export const SignIn = async (req, res) => {
       refresh = refresh_token;
     }
 
+<<<<<<< HEAD
     // const user = new User({
     //   user_id,
     //   access_token: access,
@@ -63,6 +64,26 @@ export const SignIn = async (req, res) => {
       { access_token: access, refresh_token: refresh }
     ).catch((e) => {
       console.log(e);
+=======
+    const authentication = new Authentication({
+      user_id,
+      access_token: access,
+      refresh_token: refresh,
+    });
+
+    authentication.save().catch((err) => {
+      if (err.code == 11000) {
+        Authentication.updateOne(
+          { user_id: user_id },
+          {
+            access_token: access,
+            refresh_token: refresh,
+          }
+        ).catch((err) => console.log(err));
+      } else {
+        console.log(err);
+      }
+>>>>>>> 5fbb845dcd4ee040f11dd90a2bec083bdb5b86ac
     });
 
     return res
