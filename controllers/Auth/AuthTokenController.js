@@ -14,8 +14,6 @@ export const AuthToken = async (req, res) => {
   const currentAccessToken = req.cookies?.accessToken;
   const currentRefreshToken = req.cookies?.refreshToken;
 
-  // console.log(req.cookies);
-
   try {
     if (currentAccessToken === undefined || currentRefreshToken === undefined) {
       throw Error("API 사용 권한이 없습니다.");
@@ -32,26 +30,38 @@ export const AuthToken = async (req, res) => {
 
   // console.log("accessToken", decodedAccessToken);
   // console.log("refreshToken", decodedRefreshToken);
-
-  const { _id, user_email, user_name, usertype } = await User.findOne({
+  const res_data = await User.findOne({
     refresh_token: currentRefreshToken,
-  });
-
-  // console.log("111", _id._id);
-
-  if (!_id) {
-    // 리소스(해당 토큰을 가지고 있는 유저)를 찾을 수 없음
-    return res.status(404).json({
-      success: true,
-      isAuth: false,
+  })
+    .then((data) => {
+      // console.log(data);
+      return data;
+    })
+    .catch((e) => {
+      console.log(e);
     });
+
+  // console.log(res_data);
+
+  // 리소스(해당 토큰을 가지고 있는 유저)를 찾을 수 없음
+  if (!res_data?._id) {
+    return res
+      .status(404)
+      .clearCookie("accessToken")
+      .clearCookie("refreshToken")
+      .json({
+        success: true,
+        isAuth: false,
+      });
   }
 
   const userData = {
-    _id,
-    email: user_email,
-    name: user_name,
-    usertype: String(usertype),
+    email: res_data?.user_email,
+    name: res_data?.user_name,
+    name: res_data?.user_name,
+    nickname: res_data?.profile.user_nickname,
+    image: res_data?.profile.image,
+    user_type: String(res_data?.user_type),
   };
 
   if (decodedAccessToken === null) {
@@ -71,13 +81,18 @@ export const AuthToken = async (req, res) => {
       /**
        *  DB를 조회해서 payload에 담을 값들을 가져오는 로직
        */
-      const newAccessToken = AccessToken(user_email);
+      const newAccessToken = AccessToken(userData);
+      // console.log(222, newAccessToken);
+      await User.updateOne(
+        { _id: res_data?._id },
+        { access_token: newAccessToken }
+      ).catch((e) => {
+        console.log(e);
+      });
+
       return res
         .cookie("accessToken", newAccessToken, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          domain:
-            process.env.NODE_ENV === "production" ? "pullim.shop" : "localhost",
         })
         .status(201)
         .json({

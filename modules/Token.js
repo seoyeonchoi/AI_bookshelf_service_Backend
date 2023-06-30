@@ -11,40 +11,40 @@ export const VerifyToken = (token) => {
     return jwt.verify(token, JWT_SEC);
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      // console.log("토큰이 만료되었습니다.");
+      console.log("토큰이 만료되었습니다.");
       return null;
     } else if (error.name === "JsonWebTokenError") {
-      // console.log("토큰이 없습니다.");
+      console.log("토큰이 없습니다.");
       return null;
     }
-    // console.log("VerifyToken", error);
+    console.log("VerifyToken", error);
     return null;
   }
 };
 
-export const AccessToken = (email) => {
+export const AccessToken = (data) => {
   // console.log(JWT_SEC);
   return jwt.sign(
     {
-      email: email,
+      data: data,
     },
     JWT_SEC,
     {
-      expiresIn: "200000ms", //20분
+      expiresIn: "24h", //20분
       issuer: "server",
     }
   );
 };
 
-export const RefreshToken = (email) => {
+export const RefreshToken = (data) => {
   // const secretKey = String(createSecret());
   return jwt.sign(
     {
-      email: email,
+      data: data,
     },
     JWT_SEC,
     {
-      expiresIn: "24h", //24시간
+      expiresIn: "48h", //24시간
       issuer: "server",
     }
   );
