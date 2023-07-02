@@ -18,4 +18,7 @@ AuthRouter.get("/signout", SignOut);
 import { AuthToken } from "../controllers/Auth/AuthTokenController.js";
 AuthRouter.get("/authtoken", route.use(cookieParser()), AuthToken);
 
+import { CheckUserEmail } from "../controllers/Auth/CheckUserEmailController.js";
+AuthRouter.post("/checkuseremail", CheckUserEmail);
+
 export default AuthRouter;
