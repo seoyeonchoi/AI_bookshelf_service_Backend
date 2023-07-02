@@ -18,7 +18,7 @@ export const LikeList = async (req, res) => {
       return res.status(200).json({
         success: true,
         info: {
-          list: data?.user_like_book,
+          list: data?.user_like_book.reverse(),
         },
       });
     });

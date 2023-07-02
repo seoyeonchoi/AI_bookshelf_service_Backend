@@ -18,7 +18,7 @@ export const CartList = async (req, res) => {
       return res.status(200).json({
         success: true,
         info: {
-          list: data?.user_cart,
+          list: data?.user_cart.reverse(),
         },
       });
     });
