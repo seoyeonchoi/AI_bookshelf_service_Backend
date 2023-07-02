@@ -13,12 +13,12 @@ export const BookshelfList = async (req, res) => {
         user_bookshelf: 1,
       }
     ).then((data) => {
-      // console.log(333, data?.user_bookshelf);
-      // console.log(list);
+      // console.log(333, data?.user_bookshelf.reverse());
+      // console.log(data);
       return res.status(200).json({
         success: true,
         info: {
-          list: data?.user_bookshelf,
+          list: data?.user_bookshelf.reverse(),
         },
       });
     });
