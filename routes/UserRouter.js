@@ -47,4 +47,11 @@ UserRouter.post("/bookshelflist", route.use(cookieParser()), BookshelfList);
 import { ProfileChange } from "../controllers/User/Profile/ProfileChangeController.js";
 UserRouter.post("/profileChange", route.use(cookieParser()), ProfileChange);
 
+import { CountBookshelfInfo } from "../controllers/User/Bookshelf/CountBookshelfInfoController.js";
+UserRouter.post(
+  "/countBookshelfInfo",
+  route.use(cookieParser()),
+  CountBookshelfInfo
+);
+
 export default UserRouter;
