@@ -62,7 +62,7 @@ export const SignIn = async (req, res) => {
       { _id: user_id },
       { access_token: access, refresh_token: refresh }
     ).catch((e) => {
-      console.log(e);
+      console.log(555, e);
     });
 
     return res
@@ -85,7 +85,7 @@ export const SignIn = async (req, res) => {
         },
       });
   } catch (e) {
-    console.log(e);
+    console.log(111, e);
     return res.status(500).json({
       success: false,
       info: {

@@ -7,7 +7,7 @@ const router = express.Router();
 export default router.use("/", async (req, res, next) => {
   const { user_id, password } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(password);
   await Auth.findOne({ user_id: user_id, password: password }).then(
     async (data) => {

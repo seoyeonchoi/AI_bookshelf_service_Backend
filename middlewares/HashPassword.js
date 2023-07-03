@@ -17,7 +17,7 @@ const createSalt = () =>
   });
 
 router.use("/", async (req, res, next) => {
-  console.log(req.body?.email);
+  // console.log(req.body?.email);
   const salt =
     req.body.name === undefined
       ? await User.findOne({
@@ -35,19 +35,20 @@ router.use("/", async (req, res, next) => {
 
   if (salt) {
     crypto.pbkdf2(req.body.password, salt, 9999, 64, "sha512", (e, key) => {
-      if (e)
+      if (e) {
+        console.log(333, e);
         return res.status(500).json({
           success: false,
           info: {
             message: e,
           },
         });
+      }
       req.body.password = key.toString("base64");
       req.body.salt = salt;
       next();
     });
   } else {
-    // console.log(e);
     return res.status(500).json({
       success: false,
       info: {
