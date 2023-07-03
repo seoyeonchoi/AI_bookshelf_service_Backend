@@ -47,4 +47,7 @@ UserRouter.post("/bookshelflist", route.use(cookieParser()), BookshelfList);
 import { ProfileChange } from "../controllers/User/Profile/ProfileChangeController.js";
 UserRouter.post("/profileChange", route.use(cookieParser()), ProfileChange);
 
+import { Check } from "../controllers/User/Profile/CheckController.js";
+UserRouter.post("/statcheck", route.use(cookieParser()), Check);
+
 export default UserRouter;
