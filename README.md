@@ -26,6 +26,8 @@
 1. main 브랜치에 커밋하고 원격 저장소에 푸시하기
 2. `cd ~/js_server`
 3. `git pull`
-4. `yarn` 실행하기
+4. `nodemon 설치`
+5. `mongodb 설치`
+6. `yarn` 실행하기
 
 # aivle0317_BE
