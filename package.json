@@ -11,8 +11,8 @@
     "nodemon": "^2.0.22"
   },
   "scripts": {
-    "start": "nodemon --watch ../aivle0317_BE app.js",
-    "dev": "nodemon --watch ../aivle0317_BE app.js"
+    "start": "yarn && nodemon --watch ../aivle0317_BE app.js",
+    "dev": "yarn && nodemon --watch ../aivle0317_BE app.js"
   },
   "name": "my-package",
   "type": "module"
